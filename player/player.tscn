@@ -1,0 +1,182 @@
+[gd_scene load_steps=19 format=3 uid="uid://ba4041wy2jw3n"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" path="res://player/shack_generator.gd" id="2_6og0m"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqu6x"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_t8k5w"]
+radius = 0.45
+
+[sub_resource type="Animation" id="Animation_yyf4t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("camera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n7bqr"]
+resource_name = "crough"
+length = 1.4
+loop_mode = 1
+step = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("camera:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.7, 1.05, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0523599, 0.0523599, -0.00523599), Vector3(0, 0, 0), Vector3(-0.0523599, -0.0523599, -0.00523599), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ptuof"]
+resource_name = "idle"
+length = 1.4
+loop_mode = 1
+step = 0.035
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("camera:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.7, 1.05, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.00349066, -0.00349066, -0.00174533), Vector3(0, 0, 0), Vector3(0.00349066, -0.00349066, -0.00174533), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_11tsg"]
+resource_name = "run"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("camera:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0349066, 0.0349066, -0.00349066), Vector3(0, 0, 0), Vector3(-0.0349066, -0.0349066, -0.00349066), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uhwvu"]
+resource_name = "walk"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("camera:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0174533, 0.0174533, -0.00174533), Vector3(0, 0, 0), Vector3(-0.0174533, -0.0174533, -0.00174533), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eq2e1"]
+_data = {
+"RESET": SubResource("Animation_yyf4t"),
+"crough": SubResource("Animation_n7bqr"),
+"idle": SubResource("Animation_ptuof"),
+"run": SubResource("Animation_11tsg"),
+"walk": SubResource("Animation_uhwvu")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_526at"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l3wfo"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t8l1f"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xhkiy"]
+animation = &"crough"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wpk1g"]
+animation = &"crough"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_krwnn"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_526at")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_l3wfo")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_t8l1f")
+blend_point_2/pos = 2.0
+blend_point_3/node = SubResource("AnimationNodeAnimation_xhkiy")
+blend_point_3/pos = -1.0
+blend_point_4/node = SubResource("AnimationNodeAnimation_wpk1g")
+blend_point_4/pos = -2.0
+max_space = 2.0
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4axpa"]
+graph_offset = Vector2(-278.636, 39.7273)
+nodes/blend/node = SubResource("AnimationNodeBlendSpace1D_krwnn")
+nodes/blend/position = Vector2(20, 140)
+node_connections = [&"output", 0, &"blend"]
+
+[sub_resource type="Curve" id="Curve_tugkj"]
+min_value = -1.0
+
+[node name="player" type="CharacterBody3D"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("1_oul6g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.003, 1, 0.002)
+shape = SubResource("CapsuleShape3D_kqu6x")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="CollisionShape3D"]
+transform = Transform3D(-0.998225, -0.01273, 0.0581734, 0.0123322, -0.999898, -0.00719216, 0.058259, -0.00646204, 0.998281, 0, 0.5, 0)
+top_level = true
+shape = SubResource("CylinderShape3D_t8k5w")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.8, 0)
+top_level = true
+
+[node name="camera" type="Camera3D" parent="Head"]
+
+[node name="head_animation" type="AnimationPlayer" parent="Head"]
+libraries = {
+"": SubResource("AnimationLibrary_eq2e1")
+}
+autoplay = "idle"
+
+[node name="AnimationTree" type="AnimationTree" parent="Head/head_animation"]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeBlendTree_4axpa")
+anim_player = NodePath("..")
+parameters/blend/blend_position = 0.0
+
+[node name="step_interval" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[node name="shack_generator" type="Node3D" parent="."]
+script = ExtResource("2_6og0m")
+curve = SubResource("Curve_tugkj")
+
+[connection signal="timeout" from="step_interval" to="." method="_on_step_interval_timeout"]
