@@ -39,7 +39,7 @@ var headbob_blend:float = 0
 var anim_state:float = 0
 
 func _ready() -> void:
-	unfocus()
+	focus()
 func _process(delta: float) -> void:
 	
 	
@@ -146,7 +146,6 @@ func _process(delta: float) -> void:
 
 	headbob_blend = move_toward(headbob_blend, anim_state, delta)
 	anim_headbob["parameters/blend/blend_position"] = headbob_blend
-	print(anim_headbob["parameters/blend/blend_position"])
 	
 	
 func _input(event: InputEvent) -> void:
