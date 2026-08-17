@@ -12,3 +12,9 @@ Some of the features highlighted:
 - Use of 'lerp' to smooth out movements
 - Headbob 
 - Node with head-shaking script (WIP)
+
+## DEMO:
+https://github.com/user-attachments/assets/e5b0d789-f6b5-4d1f-98f4-67868b775ea0
+
+
+
